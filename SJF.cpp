@@ -20,6 +20,10 @@ using namespace std;
 SJF::SJF(){
 	lastArrival = -1;
 	CPUtimer = -1; //CPU time hasn't started
+	sumTurnaroundTime = 0;
+	sumThroughput = 0;
+	sumWaitingTime = 0;
+	countOfProcesses = 0; //FIXME 
 
 }
 
@@ -33,6 +37,7 @@ void SJF::getFileData(string fileName){
 	//make each line a process
 	while(afile >> line){
 		//cout << line << endl;
+		countOfProcesses++; 
 		alist.push_back(makeProcess(line));
 	}
 	cout << lastArrival << endl;
@@ -115,7 +120,8 @@ void SJF::putProcessInArray(list<Process> alist){
 		//cout << "before CPUTimer = " << CPUtimer << endl; 
 		tempP.terminationTime = CPUtimer + tempP.CPUburst; 
 		cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl;
-		
+		cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
+		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime; 
 		CPUtimer = CPUtimer + tempP.CPUburst;
 		 
 		//cout << "CPUtimer = " << CPUtimer << endl; 
@@ -147,6 +153,9 @@ void SJF::putProcessInArray(list<Process> alist){
 		tempP.printValues(); 
 		tempP.terminationTime = CPUtimer + tempP.CPUburst; //FIXME
 		cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl; //FIXME
+		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime;
+		CPUtimer = CPUtimer + tempP.CPUburst;
+		cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
 		q.pop(); 
 		cout << "\n"; 
 	}	
@@ -193,5 +202,11 @@ Process SJF::makeProcess(string line){
 	}
 //	p.printValues();
 	return p;
+}
+
+double SJF::getAverageTurnaroundtime(){
+	double ans = (double(sumTurnaroundTime) / double(countOfProcesses));
+	//FIXME set precision higher
+	return ans; 
 }
 
