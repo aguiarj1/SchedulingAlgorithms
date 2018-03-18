@@ -12,11 +12,13 @@
 #include "Process.h"
 #include <iostream>
 #include <fstream>
+#include <queue>
 using namespace std;
 
 class SJF {
 private:
 	int lastArrival;
+	int CPUtimer; 
 public :
 	SJF();
 	void getFileData(string);

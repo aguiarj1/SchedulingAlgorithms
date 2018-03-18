@@ -12,12 +12,14 @@
 #include <list> 
 #include <iterator>
 #include <typeinfo>
+#include <queue>
 using namespace std;
 
 
 //Constructor
 SJF::SJF(){
 	lastArrival = -1;
+	CPUtimer = -1; //CPU time hasn't started
 
 }
 
@@ -83,6 +85,8 @@ void SJF::putProcessInArray(list<Process> alist){
 		}
 		cout << " " << endl; 
 	}
+	
+	//initialize a min heap and put all the processes that start at 0
 	return;
 }
 
