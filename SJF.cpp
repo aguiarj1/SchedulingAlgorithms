@@ -87,6 +87,13 @@ void SJF::putProcessInArray(list<Process> alist){
 	}
 	
 	//initialize a min heap and put all the processes that start at 0
+	//start timer will have to be in a while loop FIXME 
+	
+	CPUtimer++; 
+	priority_queue<Process> q; 
+	while(CPUtimer > lastArrival){
+		
+	}
 	return;
 }
 
