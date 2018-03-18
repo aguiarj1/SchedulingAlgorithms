@@ -21,9 +21,9 @@ SJF::SJF(){
 	lastArrival = -1;
 	CPUtimer = -1; //CPU time hasn't started
 	sumTurnaroundTime = 0;
-	sumThroughput = 0;
 	sumWaitingTime = 0;
 	countOfProcesses = 0; //FIXME 
+	countTotalTime = 0; 
 
 }
 
@@ -120,8 +120,12 @@ void SJF::putProcessInArray(list<Process> alist){
 		//cout << "before CPUTimer = " << CPUtimer << endl; 
 		tempP.terminationTime = CPUtimer + tempP.CPUburst; 
 		cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl;
+		countTotalTime = CPUtimer + tempP.CPUburst; 
 		cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
 		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime; 
+		cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
+		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst); 
+		
 		CPUtimer = CPUtimer + tempP.CPUburst;
 		 
 		//cout << "CPUtimer = " << CPUtimer << endl; 
@@ -153,9 +157,13 @@ void SJF::putProcessInArray(list<Process> alist){
 		tempP.printValues(); 
 		tempP.terminationTime = CPUtimer + tempP.CPUburst; //FIXME
 		cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl; //FIXME
+		countTotalTime = CPUtimer + tempP.CPUburst; 
 		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime;
 		CPUtimer = CPUtimer + tempP.CPUburst;
 		cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
+		cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
+		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst); 
+
 		q.pop(); 
 		cout << "\n"; 
 	}	
@@ -207,6 +215,17 @@ Process SJF::makeProcess(string line){
 double SJF::getAverageTurnaroundtime(){
 	double ans = (double(sumTurnaroundTime) / double(countOfProcesses));
 	//FIXME set precision higher
+	return ans; 
+}
+
+double SJF::getAverageWaitingTime(){
+	double ans = (double(sumWaitingTime) / double(countOfProcesses));
+	//FIXME set precision higher
+	return ans; 
+}
+
+double SJF::getThroughput(){
+	double ans = (double(countOfProcesses) / double(countTotalTime)); 
 	return ans; 
 }
 

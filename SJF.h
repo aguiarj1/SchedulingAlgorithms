@@ -21,14 +21,16 @@ private:
 	int CPUtimer; 
 public :
 	int sumTurnaroundTime;
-	int sumThroughput;
 	int sumWaitingTime; 
 	int countOfProcesses; 
+	int countTotalTime; 
 	SJF();
 	void getFileData(string);
 	Process makeProcess(string s);
 	void putProcessInArray(list<Process> p);
 	double getAverageTurnaroundtime(); 
+	double getAverageWaitingTime(); 
+	double getThroughput();
 };
 
 
