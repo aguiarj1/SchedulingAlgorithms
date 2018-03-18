@@ -8,7 +8,7 @@
 #ifndef SJF_H_
 #define SJF_H_
 #include <string>
-#include <Process.h>
+#include "Process.h"
 #include <iostream>
 using namespace std;
 
