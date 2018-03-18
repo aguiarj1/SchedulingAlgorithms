@@ -19,6 +19,7 @@ public:
 	Process(int, int, int);
 	//bool operator>(const Process &p1, const Process &p2);
 	void printValues();
+	int getArrivalTime(); 
 };
 
 

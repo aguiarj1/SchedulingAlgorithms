@@ -8,8 +8,10 @@
 #ifndef SJF_H_
 #define SJF_H_
 #include <string>
+#include <list> 
 #include "Process.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 class SJF {
@@ -19,7 +21,7 @@ public :
 	SJF();
 	void getFileData(string);
 	Process makeProcess(string s);
-	void putProcessInArray(Process p);
+	void putProcessInArray(list<Process> p);
 };
 
 

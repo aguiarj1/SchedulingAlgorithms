@@ -20,6 +20,10 @@ void Process::printValues(){
 	cout << "CPUBurst= " << CPUburst << endl;
 	cout << "ArrivalTime= " << ArrivalTime << endl;
 }
+
+int Process::getArrivalTime(){
+	return ArrivalTime; 
+}
 /*
 bool operator>(const Process &p1, const Process &p2){
 	return true; //FIXME This is for min queue

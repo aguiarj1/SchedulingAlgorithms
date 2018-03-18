@@ -9,6 +9,9 @@
 #include <iostream>
 #include "Process.h"
 #include <fstream>
+#include <list> 
+#include <iterator>
+#include <typeinfo>
 using namespace std;
 
 
@@ -24,21 +27,62 @@ void SJF::getFileData(string fileName){
 	ifstream afile;
 	string line;
 	afile.open(fileName); //fixme
+	list<Process> alist;    
 	//make each line a process
 	while(afile >> line){
-		cout << line << endl;
-		putProcessInArray(makeProcess(line));
+		//cout << line << endl;
+		alist.push_back(makeProcess(line));
 	}
 	cout << lastArrival << endl;
-
-	//put these processes in an array based on arrival time
-		//create array
+	//do an array of size lastArrival and fill it with the processes 
+	putProcessInArray(alist); 
+	list<Process>::iterator itr; 
+	
+	// for(itr = alist.begin(); itr != alist.end(); ++itr){
+	//  	itr->printValues(); 
+	//  	cout << "\n"; 
+	// }
 	//make a min heap
 	//set up logic of putting in min heap if the time is equal or less
 
 }
 
-void SJF::putProcessInArray(Process p){
+void SJF::putProcessInArray(list<Process> alist){
+	//make array of lists 
+	list<Process> allProcesses[lastArrival+1];
+	//fill array with empty list
+	for(int i = 0; i<lastArrival+1; i++){
+		list<Process> temp;
+		allProcesses[i]=  temp; 
+	}
+	for(int i = 0; i<lastArrival+1; i++){
+		if (allProcesses[i].empty()){
+			cout << "empty" << endl;
+		}
+	}
+	//put these processes in an array based on arrival time
+	list<Process>::iterator itr; 
+	for(itr = alist.begin(); itr != alist.end(); ++itr){
+		allProcesses[itr->getArrivalTime()].push_back(*itr); 
+		
+		cout << itr->getArrivalTime();  
+ 		cout << "\n"; 
+	}
+	
+	for(int i = 0; i<lastArrival+1; i++){
+		if (allProcesses[i].empty()){
+			cout << "empty" << endl;
+		}
+		else {
+			cout << "not empty" << endl; 
+			list<Process>::iterator itr2; 
+			for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
+				cout << itr2->getArrivalTime();  
+		 		cout << ", "; 
+			}
+		}
+		cout << " " << endl; 
+	}
 	return;
 }
 
@@ -59,7 +103,7 @@ Process SJF::makeProcess(string line){
 			} else {
 				v3 = v3 + line.at(i);
 			}
-			cout << line.at(i) << endl;
+			//cout << line.at(i) << endl;
 		}
 
 	}
@@ -68,7 +112,7 @@ Process SJF::makeProcess(string line){
 	if(stoi(v3) > lastArrival){
 		lastArrival = stoi(v3);
 	}
-	p.printValues();
+//	p.printValues();
 	return p;
 }
 
