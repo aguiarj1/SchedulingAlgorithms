@@ -26,7 +26,14 @@ int Process::getArrivalTime(){
 }
 
 bool Process::operator<(const Process &p1) const{
-	return (ArrivalTime < p1.ArrivalTime); //FIXME This is for min queue
+	if(p1.CPUburst < CPUburst){
+		return true; 
+	} else if (p1.CPUburst == CPUburst){
+		return (p1.jobID < jobID); 
+	} else {
+		return false; 
+	}
+	//return (p1.CPUburst < CPUburst); //FIXME This is for min queue
 }
 
 
