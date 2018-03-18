@@ -24,10 +24,39 @@ void Process::printValues(){
 int Process::getArrivalTime(){
 	return ArrivalTime; 
 }
-/*
-bool operator>(const Process &p1, const Process &p2){
+
+bool Process::operator>(const Process &p1){
 	return true; //FIXME This is for min queue
 }
-*/
+
+bool Process::operator<(const Process &p1){
+	return false; //FIXME This is for min queue
+}
+
+bool Process::operator>=(const Process &p1){
+	return true; //FIXME This is for min queue
+}
+
+bool Process::operator<=(const Process &p1){
+	return false; //FIXME This is for min queue
+}
+
+bool Process::operator==(const Process &p1){
+	return false; //FIXME This is for min queue
+}
+
+bool Process::operator!=(const Process &p1){
+	return true; //FIXME This is for min queue
+}
+
+bool Process::compare(const Process &p1){
+	return false; 
+}
+
+bool Process::comp(const Process &p1){
+	return false; 
+}
+
+
 
 

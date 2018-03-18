@@ -88,12 +88,26 @@ void SJF::putProcessInArray(list<Process> alist){
 	
 	//initialize a min heap and put all the processes that start at 0
 	//start timer will have to be in a while loop FIXME 
-	
+	int beg = 0; 
 	CPUtimer++; 
 	priority_queue<Process> q; 
-	while(CPUtimer > lastArrival){
-		
-	}
+	// while(CPUtimer > lastArrival){
+	// 	for(int i = beg; i<=CPUtimer; i++){
+	// 		if (allProcesses[i].empty()){
+	// 			//do nothing
+	// 		}
+	// 		else {
+	// 			//add it to the queue 
+	// 			list<Process>::iterator itr2; 
+	// 			for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
+	// 				q.push(itr2); 
+	// 				// cout << itr2->getArrivalTime();  
+	// 		 		// cout << ", "; 
+	// 			}
+	// 		}
+	
+	// 	}	
+	// }
 	return;
 }
 

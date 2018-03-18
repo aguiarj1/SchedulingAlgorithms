@@ -20,6 +20,14 @@ public:
 	//bool operator>(const Process &p1, const Process &p2);
 	void printValues();
 	int getArrivalTime(); 
+	bool operator>(const Process &p1);
+	bool operator<(const Process &p1);
+	bool operator>=(const Process &p1);
+	bool operator<=(const Process &p1);
+	bool operator==(const Process &p1);
+	bool operator!=(const Process &p1);
+	bool compare(const Process &p1);
+	bool comp(const Process &p1);
 };
 
 
