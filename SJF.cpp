@@ -57,57 +57,64 @@ void SJF::putProcessInArray(list<Process> alist){
 		list<Process> temp;
 		allProcesses[i]=  temp; 
 	}
-	for(int i = 0; i<lastArrival+1; i++){
-		if (allProcesses[i].empty()){
-			cout << "empty" << endl;
-		}
-	}
+	// for(int i = 0; i<lastArrival+1; i++){
+	// 	if (allProcesses[i].empty()){
+	// 		cout << "empty" << endl;
+	// 	}
+	// }
 	//put these processes in an array based on arrival time
-	list<Process>::iterator itr; 
-	for(itr = alist.begin(); itr != alist.end(); ++itr){
-		allProcesses[itr->getArrivalTime()].push_back(*itr); 
+	// list<Process>::iterator itr; 
+	// for(itr = alist.begin(); itr != alist.end(); ++itr){
+	// 	allProcesses[itr->getArrivalTime()].push_back(*itr); 
 		
-		cout << itr->getArrivalTime();  
- 		cout << "\n"; 
-	}
+	// 	cout << itr->getArrivalTime();  
+ //		cout << "\n"; 
+	// }
 	
-	for(int i = 0; i<lastArrival+1; i++){
-		if (allProcesses[i].empty()){
-			cout << "empty" << endl;
-		}
-		else {
-			cout << "not empty" << endl; 
-			list<Process>::iterator itr2; 
-			for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
-				cout << itr2->getArrivalTime();  
-		 		cout << ", "; 
-			}
-		}
-		cout << " " << endl; 
-	}
+	// for(int i = 0; i<lastArrival+1; i++){
+	// 	if (allProcesses[i].empty()){
+	// 		cout << "empty" << endl;
+	// 	}
+	// 	else {
+	// 		cout << "not empty" << endl; 
+	// 		list<Process>::iterator itr2; 
+	// 		for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
+	// 			cout << itr2->getArrivalTime();  
+	// 	 		cout << ", "; 
+	// 		}
+	// 	}
+	// 	cout << " " << endl; 
+	// }
 	
 	//initialize a min heap and put all the processes that start at 0
 	//start timer will have to be in a while loop FIXME 
 	int beg = 0; 
 	CPUtimer++; 
 	priority_queue<Process> q; 
-	// while(CPUtimer > lastArrival){
-	// 	for(int i = beg; i<=CPUtimer; i++){
-	// 		if (allProcesses[i].empty()){
-	// 			//do nothing
-	// 		}
-	// 		else {
-	// 			//add it to the queue 
-	// 			list<Process>::iterator itr2; 
-	// 			for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
-	// 				q.push(itr2); 
-	// 				// cout << itr2->getArrivalTime();  
-	// 		 		// cout << ", "; 
-	// 			}
-	// 		}
-	
-	// 	}	
-	// }
+	while(CPUtimer > lastArrival){
+		for(int i = beg; i<=CPUtimer; i++){
+			if (allProcesses[i].empty()){
+		 		//do nothing
+			} else {
+		 		//add it to the queue 
+		 		list<Process>::iterator itr2; 
+		 		for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
+			 			q.push(*itr2); 
+			 			//cout << itr2->getArrivalTime();  
+			// 	 		// cout << ", ";
+		 		}
+			}
+		}
+		//beg = CPUtimer; 
+		CPUtimer++; 		
+	}
+	cout << "is q empty?= " << q.empty() << endl; 
+	while(!q.empty()){
+		Process tempP = q.top();
+		tempP.printValues(); 
+		q.pop(); 
+	}
+
 	return;
 }
 

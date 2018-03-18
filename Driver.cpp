@@ -15,7 +15,9 @@ int main(){
 
 	SJF sjf;
 	sjf.getFileData("jobs.txt"); //change it so constructor takes in the name of file
-
+	// Process p(6,5,10);
+	// Process p1(7,8,15);
+	//cout << (p1<p); 
 }
 
 
