@@ -12,17 +12,17 @@ using namespace std;
 Process::Process(int j, int c, int a){
 	jobID = j;
 	CPUburst = c;
-	ArrivalTime = a;
+	arrivalTime = a;
 }
 
 void Process::printValues(){
 	cout << "jobID = " << jobID << " ";
 	cout << "CPUBurst= " << CPUburst << " ";
-	cout << "ArrivalTime= " << ArrivalTime << endl;
+	cout << "ArrivalTime= " << arrivalTime << endl;
 }
 
 int Process::getArrivalTime(){
-	return ArrivalTime; 
+	return arrivalTime; 
 }
 
 bool Process::operator<(const Process &p1) const{

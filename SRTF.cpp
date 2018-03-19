@@ -79,54 +79,66 @@ void SRTF::putProcessInArray(list<Process> alist){
 		 		}
 			}
 		}
-		cout << "PRINT RESULT: "<< endl; 
+		//cout << "PRINT RESULT: "<< endl; 
 		Process tempP = q.top();
-		tempP.printValues();
+		tempP.CPUburst = tempP.CPUburst -1;
+		
 		beg =CPUtimer +1;  //= CPUtimer;
 		tempP.terminationTime = CPUtimer + tempP.CPUburst; 
-		cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl;
-		countTotalTime = CPUtimer + tempP.CPUburst; 
-		cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
-		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime; 
-		cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
-		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst); 
+		//cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl;
+		countTotalTime++; 
+		//cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
+		//cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
+		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.arrivalTime) - tempP.CPUburst); 
 		
-		CPUtimer = CPUtimer + tempP.CPUburst;
-		q.pop(); 
-		cout << "\n";
+		CPUtimer = CPUtimer + 1;
+		//pop, if greater than zero add back in, if 0 don't add
+		if(tempP.CPUburst == 0){
+			//cout << "sum turnaround time = " << sumTurnaroundTime << endl;
+			//countTotalTime = CPUtimer; 
+			tempP.printValues();
+			cout << "CPUtimer= " << CPUtimer << endl; 
+			cout << "tempP.arrivalTime= " << tempP.arrivalTime << endl; 
+			int turnAroundTime = CPUtimer - tempP.arrivalTime; 
+			sumTurnaroundTime = sumTurnaroundTime + turnAroundTime; 
+			q.pop(); 
+		} else {
+			q.pop(); 
+			q.push(tempP); 
+		}
+		
+		//cout << "\n";
 		 
 	}
-	//add anything else that is missing
-	for(int i = beg; i<=lastArrival; i++){
-		//cout << "outer for loop"<< endl; 
-		if (allProcesses[i].empty()){
-	 		//do nothing
-		} else {
-	 		//add it to the queue 
-	 		//cout << "inside else"<< endl; 
-	 		list<Process>::iterator itr2; 
-	 		for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
-	 				//cout << "inside for" << endl; 
-		 			q.push(*itr2); 
-	 		}
-		}
-	}
+	
 	//pop remaining 
-	cout << "PRINT RESULT: "<< endl; 
+	//cout << "PRINT RESULT: "<< endl; 
 	while(!q.empty()){
 		Process tempP = q.top();
-		tempP.printValues(); 
+		tempP.CPUburst = tempP.CPUburst -1;
 		tempP.terminationTime = CPUtimer + tempP.CPUburst; //FIXME
-		cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl; //FIXME
-		countTotalTime = CPUtimer + tempP.CPUburst; 
-		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime;
-		CPUtimer = CPUtimer + tempP.CPUburst;
-		cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
-		cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
-		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst); 
+		//cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl; //FIXME
+		countTotalTime++; 
+		CPUtimer = CPUtimer + 1;
+		//cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
+		//cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
+		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.arrivalTime) - tempP.CPUburst); 
 
-		q.pop(); 
-		cout << "\n"; 
+		//pop, if greater than zero add back in, if 0 don't add
+		if(tempP.CPUburst == 0){
+			//cout << "sum turnaround time = " << sumTurnaroundTime << endl;
+			//countTotalTime = CPUtimer; 
+			cout << "CPUtimer= " << CPUtimer << endl; 
+			cout << "tempP.arrivalTime= " << tempP.arrivalTime << endl; 
+			int turnAroundTime = CPUtimer - tempP.arrivalTime; 
+			sumTurnaroundTime = sumTurnaroundTime + turnAroundTime; 
+			tempP.printValues(); 
+			q.pop(); 
+		} else {
+			q.pop(); 
+			q.push(tempP); 
+		}
+		//cout << "\n"; 
 	}	
 
 	return;
@@ -163,6 +175,8 @@ Process SRTF::makeProcess(string line){
 }
 
 double SRTF::getAverageTurnaroundtime(){
+	cout << "sumTurnaroundTime= " << sumTurnaroundTime << endl; 
+	cout << "countOfProcesses= " << countOfProcesses << endl; 
 	double ans = (double(sumTurnaroundTime) / double(countOfProcesses));
 	//FIXME set precision higher
 	return ans; 

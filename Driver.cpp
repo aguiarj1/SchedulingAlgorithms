@@ -21,7 +21,7 @@ int main(){
 	// cout << "Shortest Job First (SJF)" << endl; 
 	// cout << "Average Turnaround Time= " << sjf.getAverageTurnaroundtime() << endl; 
 	// cout << "Average Waiting Time= " << sjf.getAverageWaitingTime() << endl; 
-	// cout << "Average Waiting Time= " << sjf.getThroughput() << endl;
+	// cout << "Average Throughput= " << sjf.getThroughput() << endl;
 	
 	
 	// RR rr;
@@ -29,14 +29,14 @@ int main(){
 	// cout << "Round Robin (RR)" << endl; 
 	// cout << "Average Turnaround Time= " << rr.getAverageTurnaroundtime() << endl; 
 	// cout << "Average Waiting Time= " << rr.getAverageWaitingTime() << endl; 
-	// cout << "Average Waiting Time= " << rr.getThroughput() << endl;
+	// cout << "Average Throughput= " << rr.getThroughput() << endl;
 	
-	SRTF sjf;
-	sjf.getFileData("jobs.txt"); //change it so constructor takes in the name of file
+	SRTF srtf;
+	srtf.getFileData("jobs.txt"); //change it so constructor takes in the name of file
 	cout << "Shortest Job First (SRTF)" << endl; 
-	cout << "Average Turnaround Time= " << sjf.getAverageTurnaroundtime() << endl; 
-	cout << "Average Waiting Time= " << sjf.getAverageWaitingTime() << endl; 
-	cout << "Average Waiting Time= " << sjf.getThroughput() << endl;
+	cout << "Average Turnaround Time= " << srtf.getAverageTurnaroundtime() << endl; 
+	cout << "Average Waiting Time= " << srtf.getAverageWaitingTime() << endl; 
+	cout << "Average Throughput= " << srtf.getThroughput() << endl;
  
 }
 
