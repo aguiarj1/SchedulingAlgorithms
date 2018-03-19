@@ -7,7 +7,7 @@
 #include "RR.h"
 #include <string>
 #include <iostream>
-#include "Process.h"
+#include "ProcessRR.h"
 #include <fstream>
 #include <list> 
 #include <iterator>
@@ -34,7 +34,7 @@ void RR::getFileData(string fileName){
 	ifstream afile;
 	string line;
 	afile.open(fileName); //fixme
-	list<Process> alist;    
+	list<ProcessRR> alist;    
 	//make each line a process
 	while(afile >> line){
 		//cout << line << endl;
@@ -45,87 +45,66 @@ void RR::getFileData(string fileName){
 	cout << lastArrival << endl;
 	//do an array of size lastArrival and fill it with the processes 
 	putProcessInArray(alist); 
-	list<Process>::iterator itr; 
+	list<ProcessRR>::iterator itr; 
 	
 	//make a min heap
 	//set up logic of putting in min heap if the time is equal or less
 
 }
 
-void RR::putProcessInArray(list<Process> alist){
+void RR::putProcessInArray(list<ProcessRR> alist){
 	//make array of lists 
-	list<Process> allProcesses[lastArrival+1];
+	list<ProcessRR> allProcesses[lastArrival+1];
 	//fill array with empty list
 	for(int i = 0; i<lastArrival+1; i++){
-		list<Process> temp;
+		list<ProcessRR> temp;
 		allProcesses[i]=  temp; 
 	}
 
 	//put these processes in an array based on arrival time
-	list<Process>::iterator itr; 
+	list<ProcessRR>::iterator itr; 
 	for(itr = alist.begin(); itr != alist.end(); ++itr){
 		allProcesses[itr->getArrivalTime()].push_back(*itr); 
 	}
 	
-	//DEBUG -lines 81- 95
-	for(int i = 0; i<lastArrival+1; i++){
-		if (allProcesses[i].empty()){
-			cout << "empty" << endl;
-		}
-		else {
-			cout << "not empty" << endl; 
-			list<Process>::iterator itr2; 
-			for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
-				cout << itr2->getArrivalTime();  
-		 		cout << ", "; 
-			}
-		}
-		cout << " " << endl; 
-	}
 	
 	//initialize a min heap and put all the processes that start at 0
-	//start timer will have to be in a while loop FIXME 
 	int beg = 0; 
 	CPUtimer++;
 	cout << "on top CPUtimer= "<< CPUtimer << endl; 
-	priority_queue<Process> q; 
+	priority_queue<ProcessRR> q; 
 	while(CPUtimer <= lastArrival){
 		for(int i = beg; i<=CPUtimer; i++){
 			if (allProcesses[i].empty()){
 		 		//do nothing
 			} else {
 		 		//add it to the queue 
-		 		list<Process>::iterator itr2; 
+		 		list<ProcessRR>::iterator itr2; 
 		 		for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
 			 			q.push(*itr2); 
-			 			//cout << itr2->getArrivalTime();  
-			// 	 		// cout << ", ";
 		 		}
 			}
 		}
 		cout << "PRINT RESULT: "<< endl; 
-		Process tempP = q.top();
+		ProcessRR tempP = q.top();
 		tempP.printValues();
-		//cout << "before beg = " << beg << endl; 
-		beg =CPUtimer +1;  //= CPUtimer;
-		//cout << "after beg = " << beg << endl; 
-		//cout << "before CPUTimer = " << CPUtimer << endl; 
-		// tempP.terminationTime = CPUtimer + tempP.CPUburst; 
-		// cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl;
-		// countTotalTime = CPUtimer + tempP.CPUburst; 
-		// cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
-		// sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime; 
-		// cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
-		// sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst); 
-		
-		CPUtimer = CPUtimer + 1; //tempP.CPUburst;
+		beg =CPUtimer +1;  
+		CPUtimer = CPUtimer + 1; 
 		//subtract one unit of time from top 
 		tempP.CPUburst = tempP.CPUburst -1;  
 		//pop, if greater than zero add back in, if 0 don't add
 		if(tempP.CPUburst == 0){
+			cout << "CPU timer / Termination time = " << CPUtimer << endl;
+			cout << "Arrival time=  " << tempP.arrivalTime << endl;  
+			sumTurnaroundTime = sumTurnaroundTime + (CPUtimer - tempP.arrivalTime);
+			cout << "sum turnaround time = " << sumTurnaroundTime << endl;
+			countTotalTime = CPUtimer; 
 			q.pop(); 
 		} else {
-			newArrival++; 
+			q.pop(); 
+			newArrival= CPUtimer; 
+			tempP.priority = -1; //appear first
+			cout<< "new Arrival: " << newArrival << endl; 
 			tempP.ArrivalTime = newArrival; 
 			q.push(tempP); 
 		}
@@ -134,70 +113,33 @@ void RR::putProcessInArray(list<Process> alist){
 		 
 	}
 	
-	//DONT NEED THIS
-	// //add anything else that is missing
-	// for(int i = beg; i<=lastArrival; i++){
-	// 	//cout << "outer for loop"<< endl; 
-	// 	if (allProcesses[i].empty()){
-	//  		//do nothing
-	// 	} else {
-	//  		//add it to the queue 
-	//  		//cout << "inside else"<< endl; 
-	//  		list<Process>::iterator itr2; 
-	//  		for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
-	//  				//cout << "inside for" << endl; 
-	// 	 			q.push(*itr2); 
-	// 	 			//cout << itr2->getArrivalTime();  
-	// 	// 	 		// cout << ", ";
-	//  		}
-	// 	}
-	// }
 	//pop remaining 
 	cout << "PRINT RESULT: "<< endl; 
 	while(!q.empty()){
-		Process tempP = q.top();
+		ProcessRR tempP = q.top();
 		tempP.printValues(); 
-		// tempP.terminationTime = CPUtimer + tempP.CPUburst; //FIXME
-		// cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl; //FIXME
-		// countTotalTime = CPUtimer + tempP.CPUburst; 
-		// sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime;
-		CPUtimer = CPUtimer + 1; // tempP.CPUburst;
+		CPUtimer = CPUtimer + 1; 
 		//subtract one unit of time from top 
 		tempP.CPUburst = tempP.CPUburst -1;  
 		//pop, if greater than zero add back in, if 0 don't add
 		if(tempP.CPUburst == 0){
+			sumTurnaroundTime = sumTurnaroundTime + (CPUtimer - tempP.arrivalTime);
+			countTotalTime = CPUtimer;
 			q.pop(); 
 		} else {
 			q.pop(); 
-			newArrival++; 
+			newArrival= CPUtimer; 
+			tempP.priority = -1; 
 			tempP.ArrivalTime = newArrival; 
 			q.push(tempP); 
 		}
-
-		// cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
-		// cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
-		// sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst); 
-
-		// q.pop(); 
 		cout << "\n"; 
 	}	
-	
-	// cout << "is q empty?= " << q.empty() << endl; 
-	// int counter = 0; 
-	// while(!q.empty()){
-	// 	cout << counter << endl; 
-	// 	Process tempP = q.top();
-	// 	tempP.printValues(); 
-	// 	q.pop(); 
-	// 	cout << "\n"; 
-	// 	counter++; 
-	// }
-
 	return;
 }
 
 //maybe this should be private... helper function
-Process RR::makeProcess(string line){
+ProcessRR RR::makeProcess(string line){
 	int commas = 0;
 	string v1 = "";
 	string v2 = "";
@@ -217,7 +159,7 @@ Process RR::makeProcess(string line){
 		}
 
 	}
-	Process p(stoi(v1), stoi(v2), stoi(v3));
+	ProcessRR p(stoi(v1), stoi(v2), stoi(v3));
 	//find out last arrival time;
 	if(stoi(v3) > lastArrival){
 		lastArrival = stoi(v3);
@@ -227,6 +169,7 @@ Process RR::makeProcess(string line){
 }
 
 double RR::getAverageTurnaroundtime(){
+	cout << "sum turnaround time: " << sumTurnaroundTime << endl; 
 	double ans = (double(sumTurnaroundTime) / double(countOfProcesses));
 	//FIXME set precision higher
 	return ans; 

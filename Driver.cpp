@@ -7,6 +7,7 @@
  */
 #include "SJF.h"
 #include <iostream>
+#include "ProcessRR.h"
 #include "Process.h"
 #include <string>
 #include "RR.h"

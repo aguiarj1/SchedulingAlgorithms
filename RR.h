@@ -9,7 +9,7 @@
 #define RR_H_
 #include <string>
 #include <list> 
-#include "Process.h"
+#include "ProcessRR.h"
 #include <iostream>
 #include <fstream>
 #include <queue>
@@ -27,8 +27,8 @@ public :
 	int countTotalTime; 
 	RR();
 	void getFileData(string);
-	Process makeProcess(string s);
-	void putProcessInArray(list<Process> p);
+	ProcessRR makeProcess(string s);
+	void putProcessInArray(list<ProcessRR> p);
 	double getAverageTurnaroundtime(); 
 	double getAverageWaitingTime(); 
 	double getThroughput();

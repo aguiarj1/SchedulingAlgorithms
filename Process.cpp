@@ -16,8 +16,8 @@ Process::Process(int j, int c, int a){
 }
 
 void Process::printValues(){
-	cout << "jobID = " << jobID << endl;
-	cout << "CPUBurst= " << CPUburst << endl;
+	cout << "jobID = " << jobID << " ";
+	cout << "CPUBurst= " << CPUburst << " ";
 	cout << "ArrivalTime= " << ArrivalTime << endl;
 }
 
@@ -26,9 +26,9 @@ int Process::getArrivalTime(){
 }
 
 bool Process::operator<(const Process &p1) const{
-	if(p1.ArrivalTime < ArrivalTime){
+	if(p1.CPUburst < CPUburst){
 		return true; 
-	} else if (p1.ArrivalTime == ArrivalTime){
+	} else if (p1.CPUburst == CPUburst){
 		return (p1.jobID < jobID); 
 	} else {
 		return false; 
