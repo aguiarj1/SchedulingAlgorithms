@@ -1,8 +1,8 @@
 /*
  * Process.h
- *
- *  Created on: Mar 17, 2018
- *      Author: jagui
+ * This is the header file for Process class. This class
+ * represents a proceess. 
+ *  
  */
 #include <iostream>
 #include <string>
@@ -12,20 +12,20 @@ using namespace std;
 
 class Process{
 private:
-
-
-
 public:
 	int terminationTime;
 	int arrivalTime; 
 	int jobID;
 	int CPUburst;
 	int tempCPUburst; 
-	int ArrivalTime;
+	//constructor that takes in three param
+	//jobID, CPUburst,and arrivaltime
 	Process(int, int, int);
-	//bool operator>(const Process &p1, const Process &p2);
+	//prints the jobId of a process
 	void printValues();
+	//returns arrival time of process
 	int getArrivalTime(); 
+	//is used to compare priority of processes 
 	bool operator<(const Process &p1) const;
 };
 

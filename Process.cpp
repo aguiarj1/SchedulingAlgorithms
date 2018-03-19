@@ -1,14 +1,15 @@
 /*
  * Process.cpp
- *
- *  Created on: Mar 17, 2018
- *      Author: jagui
+ * This is the Process cpp file that implements 
+ * all the methods for the Process class. 
  */
 #include "Process.h"
 #include <iostream>
 #include <string>
 using namespace std;
 
+//constructor that takes in three param
+//jobID, CPUburst,and arrivaltime
 Process::Process(int j, int c, int a){
 	jobID = j;
 	CPUburst = c;
@@ -16,14 +17,17 @@ Process::Process(int j, int c, int a){
 	tempCPUburst = c; 
 }
 
+//prints the jobId of a process
 void Process::printValues(){
 	cout << jobID << ", ";
 }
 
+//returns arrival time of process
 int Process::getArrivalTime(){
 	return arrivalTime; 
 }
 
+//is used to compare priority of processes 
 bool Process::operator<(const Process &p1) const{
 	if(p1.CPUburst < CPUburst){
 		return true; 

@@ -24,12 +24,22 @@ public :
 	int sumWaitingTime; 
 	int countOfProcesses; 
 	int countTotalTime; 
+	//Constructor 
 	SRTF();
+	//gets the data from the file and puts them into 
+	//a list of Process objects
 	void getFileData(string);
+	//goes through text and gets the data from the file
+	//to make a Process object 
 	Process makeProcess(string s);
+	//puts all the processes in an array and then 
+	//uses a minqueue to process them. 
 	void putProcessInArray(list<Process> p);
-	double getAverageTurnaroundtime(); 
+	//calculates and returns the turnaroundtime
+	double getAverageTurnaroundtime();
+	//calculates and returns the averagewait time
 	double getAverageWaitingTime(); 
+	//calculates and returns the throughput
 	double getThroughput();
 };
 

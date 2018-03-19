@@ -26,7 +26,8 @@ SRTF::SRTF(){
 	countTotalTime = 0; 
 
 }
-
+//gets the data from the file and puts them into 
+//a list of Process objects
 void SRTF::getFileData(string fileName){
 	//print out all values from file
 	ifstream afile;
@@ -44,6 +45,8 @@ void SRTF::getFileData(string fileName){
 
 }
 
+//puts all the processes in an array and then 
+//uses a minqueue to process them.
 void SRTF::putProcessInArray(list<Process> alist){
 	//make array of lists 
 	list<Process> allProcesses[lastArrival+1];
@@ -120,7 +123,8 @@ void SRTF::putProcessInArray(list<Process> alist){
 	return;
 }
 
-//maybe this should be private... helper function
+//goes through text and gets the data from the file
+//to make a Process object 
 Process SRTF::makeProcess(string line){
 	int commas = 0;
 	string v1 = "";
@@ -148,19 +152,19 @@ Process SRTF::makeProcess(string line){
 //	p.printValues();
 	return p;
 }
-
+//calculates and returns the turnaroundtime
 double SRTF::getAverageTurnaroundtime(){
 	double ans = (double(sumTurnaroundTime) / double(countOfProcesses));
 	//FIXME set precision higher
 	return ans; 
 }
-
+//calculates and returns the averagewait time
 double SRTF::getAverageWaitingTime(){
 	double ans = (double(sumWaitingTime) / double(countOfProcesses));
 	//FIXME set precision higher
 	return ans; 
 }
-
+//calculates and returns the throughput
 double SRTF::getThroughput(){
 	double ans = (double(countOfProcesses) / double(countTotalTime)); 
 	return ans; 

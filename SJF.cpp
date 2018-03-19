@@ -1,8 +1,7 @@
 /*
  * SJF.cpp
- *
- *  Created on: Mar 17, 2018
- *      Author: jagui
+ * This is the Shortest Job First Scheduling 
+ * algorithm. 
  */
 #include "SJF.h"
 #include <string>
@@ -16,22 +15,24 @@
 using namespace std;
 
 
-//Constructor
+//Constructor 
 SJF::SJF(){
 	lastArrival = -1;
 	CPUtimer = -1; //CPU time hasn't started
 	sumTurnaroundTime = 0;
 	sumWaitingTime = 0;
-	countOfProcesses = 0; //FIXME 
+	countOfProcesses = 0; 
 	countTotalTime = 0; 
 
 }
 
+//gets the data from the file and puts them into 
+//a list of Process objects
 void SJF::getFileData(string fileName){
 	//print out all values from file
 	ifstream afile;
 	string line;
-	afile.open(fileName); //fixme
+	afile.open(fileName); 
 	list<Process> alist;    
 	//make each line a process
 	while(afile >> line){
@@ -43,6 +44,8 @@ void SJF::getFileData(string fileName){
 	list<Process>::iterator itr; 
 }
 
+//puts all the processes in an array and then 
+//uses a minqueue to process them. 
 void SJF::putProcessInArray(list<Process> alist){
 	//make array of lists 
 	list<Process> allProcesses[lastArrival+1];
@@ -81,9 +84,9 @@ void SJF::putProcessInArray(list<Process> alist){
 		tempP.terminationTime = CPUtimer + tempP.CPUburst; 
 		countTotalTime = CPUtimer + tempP.CPUburst; 
 		
-		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime; 
+		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.arrivalTime; 
 		
-		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst); 
+		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.arrivalTime) - tempP.CPUburst); 
 		
 		CPUtimer = CPUtimer + tempP.CPUburst;
 		q.pop(); 
@@ -107,15 +110,16 @@ void SJF::putProcessInArray(list<Process> alist){
 		tempP.printValues(); 
 		tempP.terminationTime = CPUtimer + tempP.CPUburst; 
 		countTotalTime = CPUtimer + tempP.CPUburst; 
-		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime;
+		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.arrivalTime;
 		CPUtimer = CPUtimer + tempP.CPUburst;
-		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst); 
+		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.arrivalTime) - tempP.CPUburst); 
 		q.pop(); 
 	}	
 	return;
 }
 
-//maybe this should be private... helper function
+//goes through text and gets the data from the file
+//to make a Process object 
 Process SJF::makeProcess(string line){
 	int commas = 0;
 	string v1 = "";
@@ -143,19 +147,19 @@ Process SJF::makeProcess(string line){
 //	p.printValues();
 	return p;
 }
-
+//calculates and returns the turnaroundtime
 double SJF::getAverageTurnaroundtime(){
 	double ans = (double(sumTurnaroundTime) / double(countOfProcesses));
 	//FIXME set precision higher
 	return ans; 
 }
-
+//calculates and returns the averagewait time
 double SJF::getAverageWaitingTime(){
 	double ans = (double(sumWaitingTime) / double(countOfProcesses));
 	//FIXME set precision higher
 	return ans; 
 }
-
+//calculates and returns the throughput
 double SJF::getThroughput(){
 	double ans = (double(countOfProcesses) / double(countTotalTime)); 
 	return ans; 

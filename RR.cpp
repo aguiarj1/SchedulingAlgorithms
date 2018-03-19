@@ -1,8 +1,7 @@
 /*
- * SJF.cpp
- *
- *  Created on: Mar 17, 2018
- *      Author: jagui
+ * RR.cpp
+ * This is the implementation of the 
+ * Round Robin scheduling algorithm. 
  */
 #include "RR.h"
 #include <string>
@@ -27,7 +26,8 @@ RR::RR(){
 	newArrival = -1; 
 
 }
-
+//gets the data from the file and puts them into 
+//a list of Process objects
 void RR::getFileData(string fileName){
 	//print out all values from file
 	ifstream afile;
@@ -48,7 +48,8 @@ void RR::getFileData(string fileName){
 	//set up logic of putting in min heap if the time is equal or less
 
 }
-
+//puts all the processes in an array and then 
+//uses a minqueue to process them. 
 void RR::putProcessInArray(list<ProcessRR> alist){
 	//make array of lists 
 	list<ProcessRR> allProcesses[lastArrival+1];
@@ -130,7 +131,8 @@ void RR::putProcessInArray(list<ProcessRR> alist){
 	return;
 }
 
-//maybe this should be private... helper function
+//goes through text and gets the data from the file
+//to make a Process object 
 ProcessRR RR::makeProcess(string line){
 	int commas = 0;
 	string v1 = "";
@@ -158,19 +160,19 @@ ProcessRR RR::makeProcess(string line){
 //	p.printValues();
 	return p;
 }
-
+//calculates and returns the turnaroundtime
 double RR::getAverageTurnaroundtime(){
 	double ans = (double(sumTurnaroundTime) / double(countOfProcesses));
 	//FIXME set precision higher
 	return ans; 
 }
-
+//calculates and returns the averagewait time
 double RR::getAverageWaitingTime(){
 	double ans = (double(sumWaitingTime) / double(countOfProcesses));
 	//FIXME set precision higher
 	return ans; 
 }
-
+//calculates and returns the throughput
 double RR::getThroughput(){
 	double ans = (double(countOfProcesses) / double(countTotalTime)); 
 	return ans; 
