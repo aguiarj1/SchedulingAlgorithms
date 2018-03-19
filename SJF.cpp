@@ -62,7 +62,6 @@ void SJF::putProcessInArray(list<Process> alist){
 	//start timer will have to be in a while loop FIXME 
 	int beg = 0; 
 	CPUtimer++;
-	cout << "on top CPUtimer= "<< CPUtimer << endl; 
 	priority_queue<Process> q; 
 	while(CPUtimer <= lastArrival){
 		for(int i = beg; i<=CPUtimer; i++){
@@ -73,79 +72,46 @@ void SJF::putProcessInArray(list<Process> alist){
 		 		list<Process>::iterator itr2; 
 		 		for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
 			 			q.push(*itr2); 
-			 			//cout << itr2->getArrivalTime();  
-			// 	 		// cout << ", ";
 		 		}
 			}
 		}
-		cout << "PRINT RESULT: "<< endl; 
 		Process tempP = q.top();
 		tempP.printValues();
-		//cout << "before beg = " << beg << endl; 
-		beg =CPUtimer +1;  //= CPUtimer;
-		//cout << "after beg = " << beg << endl; 
-		//cout << "before CPUTimer = " << CPUtimer << endl; 
+		beg =CPUtimer +1; 
 		tempP.terminationTime = CPUtimer + tempP.CPUburst; 
-		cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl;
 		countTotalTime = CPUtimer + tempP.CPUburst; 
-		cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
+		
 		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime; 
-		cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
+		
 		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst); 
 		
 		CPUtimer = CPUtimer + tempP.CPUburst;
-		 
-		//cout << "CPUtimer = " << CPUtimer << endl; 
 		q.pop(); 
-		cout << "\n";
 		 
 	}
 	//add anything else that is missing
 	for(int i = beg; i<=lastArrival; i++){
-		//cout << "outer for loop"<< endl; 
 		if (allProcesses[i].empty()){
 	 		//do nothing
 		} else {
 	 		//add it to the queue 
-	 		//cout << "inside else"<< endl; 
 	 		list<Process>::iterator itr2; 
 	 		for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
-	 				//cout << "inside for" << endl; 
 		 			q.push(*itr2); 
-		 			//cout << itr2->getArrivalTime();  
-		// 	 		// cout << ", ";
 	 		}
 		}
 	}
 	//pop remaining 
-	cout << "PRINT RESULT: "<< endl; 
 	while(!q.empty()){
 		Process tempP = q.top();
 		tempP.printValues(); 
-		tempP.terminationTime = CPUtimer + tempP.CPUburst; //FIXME
-		cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl; //FIXME
+		tempP.terminationTime = CPUtimer + tempP.CPUburst; 
 		countTotalTime = CPUtimer + tempP.CPUburst; 
 		sumTurnaroundTime = sumTurnaroundTime + tempP.terminationTime - tempP.ArrivalTime;
 		CPUtimer = CPUtimer + tempP.CPUburst;
-		cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
-		cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
 		sumWaitingTime = sumWaitingTime + ((tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst); 
-
 		q.pop(); 
-		cout << "\n"; 
 	}	
-	
-	// cout << "is q empty?= " << q.empty() << endl; 
-	// int counter = 0; 
-	// while(!q.empty()){
-	// 	cout << counter << endl; 
-	// 	Process tempP = q.top();
-	// 	tempP.printValues(); 
-	// 	q.pop(); 
-	// 	cout << "\n"; 
-	// 	counter++; 
-	// }
-
 	return;
 }
 
@@ -166,7 +132,6 @@ Process SJF::makeProcess(string line){
 			} else {
 				v3 = v3 + line.at(i);
 			}
-			//cout << line.at(i) << endl;
 		}
 
 	}

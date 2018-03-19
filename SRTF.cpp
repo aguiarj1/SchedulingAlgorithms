@@ -28,7 +28,6 @@ SRTF::SRTF(){
 }
 
 void SRTF::getFileData(string fileName){
-	cout << fileName << endl; //FIXME
 	//print out all values from file
 	ifstream afile;
 	string line;
@@ -36,11 +35,9 @@ void SRTF::getFileData(string fileName){
 	list<Process> alist;    
 	//make each line a process
 	while(afile >> line){
-		//cout << line << endl;
 		countOfProcesses++; 
 		alist.push_back(makeProcess(line));
 	}
-	cout << lastArrival << endl;
 	//do an array of size lastArrival and fill it with the processes 
 	putProcessInArray(alist); 
 	list<Process>::iterator itr; 
@@ -65,7 +62,6 @@ void SRTF::putProcessInArray(list<Process> alist){
 	//start timer will have to be in a while loop FIXME 
 	int beg = 0; 
 	CPUtimer++;
-	cout << "on top CPUtimer= "<< CPUtimer << endl; 
 	priority_queue<Process> q; 
 	while(CPUtimer <= lastArrival){
 		for(int i = beg; i<=CPUtimer; i++){
@@ -79,22 +75,15 @@ void SRTF::putProcessInArray(list<Process> alist){
 		 		}
 			}
 		}
-		//cout << "PRINT RESULT: "<< endl; 
 		Process tempP = q.top();
 		tempP.CPUburst = tempP.CPUburst -1;
 		
 		beg =CPUtimer +1;  //= CPUtimer;
 		tempP.terminationTime = CPUtimer + tempP.CPUburst; 
-		//cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl;
 		countTotalTime++; 
-		//cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
-		//cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
-		
 		CPUtimer = CPUtimer + 1;
 		//pop, if greater than zero add back in, if 0 don't add
 		if(tempP.CPUburst == 0){
-			//cout << "sum turnaround time = " << sumTurnaroundTime << endl;
-			//countTotalTime = CPUtimer; 
 			tempP.printValues();
 			int turnAroundTime = CPUtimer - tempP.arrivalTime; 
 			int waitingTime = turnAroundTime - tempP.tempCPUburst; 
@@ -105,26 +94,17 @@ void SRTF::putProcessInArray(list<Process> alist){
 			q.pop(); 
 			q.push(tempP); 
 		}
-		
-		//cout << "\n";
-		 
 	}
 	
 	//pop remaining 
-	//cout << "PRINT RESULT: "<< endl; 
 	while(!q.empty()){
 		Process tempP = q.top();
 		tempP.CPUburst = tempP.CPUburst -1;
-		tempP.terminationTime = CPUtimer + tempP.CPUburst; //FIXME
-		//cout << "TerminationTime = " << CPUtimer + tempP.CPUburst << endl; //FIXME
+		tempP.terminationTime = CPUtimer + tempP.CPUburst; 
+		
 		countTotalTime++; 
 		CPUtimer = CPUtimer + 1;
-		//cout << "Turnaround Time = " << tempP.terminationTime - tempP.ArrivalTime << endl; 
-		//cout << "Waiting Time = " << (tempP.terminationTime - tempP.ArrivalTime) - tempP.CPUburst << endl; 
-		//pop, if greater than zero add back in, if 0 don't add
 		if(tempP.CPUburst == 0){
-			//cout << "sum turnaround time = " << sumTurnaroundTime << endl;
-			//countTotalTime = CPUtimer; 
 			int turnAroundTime = CPUtimer - tempP.arrivalTime; 
 			int waitingTime = turnAroundTime - tempP.tempCPUburst; 
 			sumTurnaroundTime = sumTurnaroundTime + turnAroundTime; 
@@ -135,7 +115,6 @@ void SRTF::putProcessInArray(list<Process> alist){
 			q.pop(); 
 			q.push(tempP); 
 		}
-		//cout << "\n"; 
 	}	
 
 	return;
@@ -158,7 +137,6 @@ Process SRTF::makeProcess(string line){
 			} else {
 				v3 = v3 + line.at(i);
 			}
-			//cout << line.at(i) << endl;
 		}
 
 	}

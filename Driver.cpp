@@ -15,30 +15,38 @@
 using namespace std;
 
 int main(){
-
-	cout << "Shortest Job First (SJF)" << endl;
+	
+	
+	cout << "Please input name of file with data: "; 
+	string fileName;
+	getline (cin, fileName);
+	cout << "\nYou are the scheduling algorithms for the file " << fileName << "."<<endl; 
+	cout << "\nShortest Job First (SJF)" << endl;
+	
 	SJF sjf;
-	sjf.getFileData("jobs.txt"); //change it so constructor takes in the name of file
-	cout << "Average Waiting Time= " << sjf.getAverageWaitingTime() << endl;
+	sjf.getFileData("fileName"); 
+	cout << "\nAverage Waiting Time= " << sjf.getAverageWaitingTime() << endl;
 	cout << "Average Throughput= " << sjf.getThroughput() << endl;
 	cout << "Average Turnaround Time= " << sjf.getAverageTurnaroundtime() << endl; 
 	cout << "\n"; 
 	
-	cout << "\nRound Robin (RR)" << endl;
+	cout << "Round Robin (RR)" << endl;
 	RR rr;
 	cout << "Order: "; 
-	rr.getFileData("jobs.txt"); //change it so constructor takes in the name of file
+	rr.getFileData("fileName"); 
 	cout << "\nAverage Waiting Time= " << rr.getAverageWaitingTime() << endl; 
 	cout << "Average Throughput= " << rr.getThroughput() << endl;
 	cout << "Average Turnaround Time= " << rr.getAverageTurnaroundtime() << endl; 
 	cout << "\n"; 	
 	
-	// SRTF srtf;
-	// srtf.getFileData("jobs.txt"); //change it so constructor takes in the name of file
-	// cout << "Shortest Job First (SRTF)" << endl; 
-	// cout << "Average Turnaround Time= " << srtf.getAverageTurnaroundtime() << endl; 
-	// cout << "Average Waiting Time= " << srtf.getAverageWaitingTime() << endl; 
-	// cout << "Average Throughput= " << srtf.getThroughput() << endl;
+	cout << "Shortest Remaining Time (SRTF)" << endl; 
+	SRTF srtf;
+	srtf.getFileData("fileName");
+	cout << "\nAverage Waiting Time= " << srtf.getAverageWaitingTime() << endl;
+	cout << "Average Throughput= " << srtf.getThroughput() << endl;
+	cout << "Average Turnaround Time= " << srtf.getAverageTurnaroundtime() << endl; 
+	cout << "\n"; 
+	
  
 }
 
