@@ -6,6 +6,7 @@
  *      Author: jagui
  */
 #include "SJF.h"
+#include "SRTF.h"
 #include <iostream>
 #include "ProcessRR.h"
 #include "Process.h"
@@ -23,13 +24,19 @@ int main(){
 	// cout << "Average Waiting Time= " << sjf.getThroughput() << endl;
 	
 	
-	RR rr;
-	rr.getFileData("jobs.txt"); //change it so constructor takes in the name of file
-	cout << "Round Robin (RR)" << endl; 
-	cout << "Average Turnaround Time= " << rr.getAverageTurnaroundtime() << endl; 
-	cout << "Average Waiting Time= " << rr.getAverageWaitingTime() << endl; 
-	cout << "Average Waiting Time= " << rr.getThroughput() << endl;
+	// RR rr;
+	// rr.getFileData("jobs.txt"); //change it so constructor takes in the name of file
+	// cout << "Round Robin (RR)" << endl; 
+	// cout << "Average Turnaround Time= " << rr.getAverageTurnaroundtime() << endl; 
+	// cout << "Average Waiting Time= " << rr.getAverageWaitingTime() << endl; 
+	// cout << "Average Waiting Time= " << rr.getThroughput() << endl;
 	
+	SRTF sjf;
+	sjf.getFileData("jobs.txt"); //change it so constructor takes in the name of file
+	cout << "Shortest Job First (SRTF)" << endl; 
+	cout << "Average Turnaround Time= " << sjf.getAverageTurnaroundtime() << endl; 
+	cout << "Average Waiting Time= " << sjf.getAverageWaitingTime() << endl; 
+	cout << "Average Waiting Time= " << sjf.getThroughput() << endl;
  
 }
 

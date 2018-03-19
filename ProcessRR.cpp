@@ -28,9 +28,9 @@ int ProcessRR::getArrivalTime(){
 }
 
 bool ProcessRR::operator<(const ProcessRR &p1) const{
-	if(p1.ArrivalTime < ArrivalTime){
+	if(p1.tempArrivalTime < tempArrivalTime){
 		return true; 
-	} else if (p1.ArrivalTime == ArrivalTime){
+	} else if (p1.tempArrivalTime == tempArrivalTime){
 		return (p1.priority < priority); 
 	} else {
 		return false; 

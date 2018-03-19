@@ -105,7 +105,7 @@ void RR::putProcessInArray(list<ProcessRR> alist){
 			newArrival= CPUtimer; 
 			tempP.priority = -1; //appear first
 			cout<< "new Arrival: " << newArrival << endl; 
-			tempP.ArrivalTime = newArrival; 
+			tempP.tempArrivalTime = newArrival; 
 			q.push(tempP); 
 		}
 		
@@ -130,7 +130,7 @@ void RR::putProcessInArray(list<ProcessRR> alist){
 			q.pop(); 
 			newArrival= CPUtimer; 
 			tempP.priority = -1; 
-			tempP.ArrivalTime = newArrival; 
+			tempP.tempArrivalTime = newArrival; 
 			q.push(tempP); 
 		}
 		cout << "\n"; 
