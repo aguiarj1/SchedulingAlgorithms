@@ -16,27 +16,29 @@ using namespace std;
 
 int main(){
 
-	// SJF sjf;
-	// sjf.getFileData("jobs.txt"); //change it so constructor takes in the name of file
-	// cout << "Shortest Job First (SJF)" << endl; 
-	// cout << "Average Turnaround Time= " << sjf.getAverageTurnaroundtime() << endl; 
-	// cout << "Average Waiting Time= " << sjf.getAverageWaitingTime() << endl; 
-	// cout << "Average Throughput= " << sjf.getThroughput() << endl;
+	cout << "Shortest Job First (SJF)" << endl;
+	SJF sjf;
+	sjf.getFileData("jobs.txt"); //change it so constructor takes in the name of file
+	cout << "Average Waiting Time= " << sjf.getAverageWaitingTime() << endl;
+	cout << "Average Throughput= " << sjf.getThroughput() << endl;
+	cout << "Average Turnaround Time= " << sjf.getAverageTurnaroundtime() << endl; 
+	cout << "\n"; 
 	
+	cout << "\nRound Robin (RR)" << endl;
+	RR rr;
+	cout << "Order: "; 
+	rr.getFileData("jobs.txt"); //change it so constructor takes in the name of file
+	cout << "\nAverage Waiting Time= " << rr.getAverageWaitingTime() << endl; 
+	cout << "Average Throughput= " << rr.getThroughput() << endl;
+	cout << "Average Turnaround Time= " << rr.getAverageTurnaroundtime() << endl; 
+	cout << "\n"; 	
 	
-	// RR rr;
-	// rr.getFileData("jobs.txt"); //change it so constructor takes in the name of file
-	// cout << "Round Robin (RR)" << endl; 
-	// cout << "Average Turnaround Time= " << rr.getAverageTurnaroundtime() << endl; 
-	// cout << "Average Waiting Time= " << rr.getAverageWaitingTime() << endl; 
-	// cout << "Average Throughput= " << rr.getThroughput() << endl;
-	
-	SRTF srtf;
-	srtf.getFileData("jobs.txt"); //change it so constructor takes in the name of file
-	cout << "Shortest Job First (SRTF)" << endl; 
-	cout << "Average Turnaround Time= " << srtf.getAverageTurnaroundtime() << endl; 
-	cout << "Average Waiting Time= " << srtf.getAverageWaitingTime() << endl; 
-	cout << "Average Throughput= " << srtf.getThroughput() << endl;
+	// SRTF srtf;
+	// srtf.getFileData("jobs.txt"); //change it so constructor takes in the name of file
+	// cout << "Shortest Job First (SRTF)" << endl; 
+	// cout << "Average Turnaround Time= " << srtf.getAverageTurnaroundtime() << endl; 
+	// cout << "Average Waiting Time= " << srtf.getAverageWaitingTime() << endl; 
+	// cout << "Average Throughput= " << srtf.getThroughput() << endl;
  
 }
 

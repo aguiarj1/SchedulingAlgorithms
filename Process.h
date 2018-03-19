@@ -20,6 +20,7 @@ public:
 	int arrivalTime; 
 	int jobID;
 	int CPUburst;
+	int tempCPUburst; 
 	int ArrivalTime;
 	Process(int, int, int);
 	//bool operator>(const Process &p1, const Process &p2);

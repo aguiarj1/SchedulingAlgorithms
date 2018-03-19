@@ -13,12 +13,11 @@ Process::Process(int j, int c, int a){
 	jobID = j;
 	CPUburst = c;
 	arrivalTime = a;
+	tempCPUburst = c; 
 }
 
 void Process::printValues(){
-	cout << "jobID = " << jobID << " ";
-	cout << "CPUBurst= " << CPUburst << " ";
-	cout << "ArrivalTime= " << arrivalTime << endl;
+	cout << jobID << ", ";
 }
 
 int Process::getArrivalTime(){

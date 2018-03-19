@@ -29,7 +29,6 @@ RR::RR(){
 }
 
 void RR::getFileData(string fileName){
-	cout << fileName << endl; //FIXME
 	//print out all values from file
 	ifstream afile;
 	string line;
@@ -37,12 +36,10 @@ void RR::getFileData(string fileName){
 	list<ProcessRR> alist;    
 	//make each line a process
 	while(afile >> line){
-		//cout << line << endl;
 		countOfProcesses++; 
 		alist.push_back(makeProcess(line));
 	}
 	newArrival = countOfProcesses; 
-	cout << lastArrival << endl;
 	//do an array of size lastArrival and fill it with the processes 
 	putProcessInArray(alist); 
 	list<ProcessRR>::iterator itr; 
@@ -71,7 +68,6 @@ void RR::putProcessInArray(list<ProcessRR> alist){
 	//initialize a min heap and put all the processes that start at 0
 	int beg = 0; 
 	CPUtimer++;
-	cout << "on top CPUtimer= "<< CPUtimer << endl; 
 	priority_queue<ProcessRR> q; 
 	while(CPUtimer <= lastArrival){
 		for(int i = beg; i<=CPUtimer; i++){
@@ -85,7 +81,6 @@ void RR::putProcessInArray(list<ProcessRR> alist){
 		 		}
 			}
 		}
-		cout << "PRINT RESULT: "<< endl; 
 		ProcessRR tempP = q.top();
 		tempP.printValues();
 		beg =CPUtimer +1;  
@@ -94,27 +89,22 @@ void RR::putProcessInArray(list<ProcessRR> alist){
 		tempP.CPUburst = tempP.CPUburst -1;  
 		//pop, if greater than zero add back in, if 0 don't add
 		if(tempP.CPUburst == 0){
-			cout << "CPU timer / Termination time = " << CPUtimer << endl;
-			cout << "Arrival time=  " << tempP.arrivalTime << endl;  
 			sumTurnaroundTime = sumTurnaroundTime + (CPUtimer - tempP.arrivalTime);
-			cout << "sum turnaround time = " << sumTurnaroundTime << endl;
 			countTotalTime = CPUtimer; 
+			int turnaroundtime = CPUtimer - tempP.arrivalTime; 
+			int waitingtime = turnaroundtime - tempP.tempCPUburst; 
+			sumWaitingTime = sumWaitingTime + waitingtime; 
 			q.pop(); 
 		} else {
 			q.pop(); 
 			newArrival= CPUtimer; 
 			tempP.priority = -1; //appear first
-			cout<< "new Arrival: " << newArrival << endl; 
 			tempP.tempArrivalTime = newArrival; 
 			q.push(tempP); 
 		}
-		
-		cout << "\n";
-		 
 	}
 	
 	//pop remaining 
-	cout << "PRINT RESULT: "<< endl; 
 	while(!q.empty()){
 		ProcessRR tempP = q.top();
 		tempP.printValues(); 
@@ -125,6 +115,9 @@ void RR::putProcessInArray(list<ProcessRR> alist){
 		if(tempP.CPUburst == 0){
 			sumTurnaroundTime = sumTurnaroundTime + (CPUtimer - tempP.arrivalTime);
 			countTotalTime = CPUtimer;
+			int turnaroundtime = CPUtimer - tempP.arrivalTime; 
+			int waitingtime = turnaroundtime - tempP.tempCPUburst; 
+			sumWaitingTime = sumWaitingTime + waitingtime; 
 			q.pop(); 
 		} else {
 			q.pop(); 
@@ -133,7 +126,6 @@ void RR::putProcessInArray(list<ProcessRR> alist){
 			tempP.tempArrivalTime = newArrival; 
 			q.push(tempP); 
 		}
-		cout << "\n"; 
 	}	
 	return;
 }
@@ -155,7 +147,6 @@ ProcessRR RR::makeProcess(string line){
 			} else {
 				v3 = v3 + line.at(i);
 			}
-			//cout << line.at(i) << endl;
 		}
 
 	}
@@ -169,7 +160,6 @@ ProcessRR RR::makeProcess(string line){
 }
 
 double RR::getAverageTurnaroundtime(){
-	cout << "sum turnaround time: " << sumTurnaroundTime << endl; 
 	double ans = (double(sumTurnaroundTime) / double(countOfProcesses));
 	//FIXME set precision higher
 	return ans; 

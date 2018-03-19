@@ -22,7 +22,7 @@ public:
 	int tempArrivalTime; 
 	int jobID;
 	int CPUburst;
-	int ArrivalTime;
+	int tempCPUburst; 
 	ProcessRR(int, int, int);
 	//bool operator>(const Process &p1, const Process &p2);
 	void printValues();

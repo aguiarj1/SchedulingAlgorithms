@@ -12,19 +12,18 @@ using namespace std;
 ProcessRR::ProcessRR(int j, int c, int a){
 	jobID = j;
 	CPUburst = c;
-	ArrivalTime = a;
+	tempCPUburst = c; 
+	arrivalTime = a;
 	priority  = jobID; 
 	tempArrivalTime = a; 
 }
 
 void ProcessRR::printValues(){
-	cout << "jobID = " << jobID << " ";
-	cout << "CPUBurst= " << CPUburst << " ";
-	cout << "ArrivalTime= " << ArrivalTime << endl;
+	cout << jobID << ", ";
 }
 
 int ProcessRR::getArrivalTime(){
-	return ArrivalTime; 
+	return arrivalTime; 
 }
 
 bool ProcessRR::operator<(const ProcessRR &p1) const{

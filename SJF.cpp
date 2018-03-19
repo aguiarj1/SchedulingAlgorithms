@@ -28,7 +28,6 @@ SJF::SJF(){
 }
 
 void SJF::getFileData(string fileName){
-	cout << fileName << endl; //FIXME
 	//print out all values from file
 	ifstream afile;
 	string line;
@@ -36,22 +35,12 @@ void SJF::getFileData(string fileName){
 	list<Process> alist;    
 	//make each line a process
 	while(afile >> line){
-		//cout << line << endl;
 		countOfProcesses++; 
 		alist.push_back(makeProcess(line));
 	}
-	cout << lastArrival << endl;
 	//do an array of size lastArrival and fill it with the processes 
 	putProcessInArray(alist); 
 	list<Process>::iterator itr; 
-	
-	// for(itr = alist.begin(); itr != alist.end(); ++itr){
-	//  	itr->printValues(); 
-	//  	cout << "\n"; 
-	// }
-	//make a min heap
-	//set up logic of putting in min heap if the time is equal or less
-
 }
 
 void SJF::putProcessInArray(list<Process> alist){
@@ -62,33 +51,11 @@ void SJF::putProcessInArray(list<Process> alist){
 		list<Process> temp;
 		allProcesses[i]=  temp; 
 	}
-	// for(int i = 0; i<lastArrival+1; i++){
-	// 	if (allProcesses[i].empty()){
-	// 		cout << "empty" << endl;
-	// 	}
-	// }
+
 	//put these processes in an array based on arrival time
 	list<Process>::iterator itr; 
 	for(itr = alist.begin(); itr != alist.end(); ++itr){
 		allProcesses[itr->getArrivalTime()].push_back(*itr); 
-		
-		//cout << itr->getArrivalTime();  
- 		//cout << "\n"; 
-	}
-	
-	for(int i = 0; i<lastArrival+1; i++){
-		if (allProcesses[i].empty()){
-			cout << "empty" << endl;
-		}
-		else {
-			cout << "not empty" << endl; 
-			list<Process>::iterator itr2; 
-			for(itr2 = allProcesses[i].begin(); itr2 != allProcesses[i].end(); ++itr2){
-				cout << itr2->getArrivalTime();  
-		 		cout << ", "; 
-			}
-		}
-		cout << " " << endl; 
 	}
 	
 	//initialize a min heap and put all the processes that start at 0
